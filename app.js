@@ -26,11 +26,13 @@ app.use(
       }
     `),
     rootValue: {
-      replays: () => ['Map', 'Ladder', 'Host']
+      replays: () => ['Map', 'Ladder', 'Host'],
+      createReplay: args => {
+        const replayName = args.name;
+        return replayName;
+      }
     },
-    createReplay: (args) => {
-      
-    }
+    graphiql: true
   })
 );
 
