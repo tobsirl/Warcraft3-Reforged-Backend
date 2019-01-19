@@ -11,6 +11,21 @@ app.use(
   '/graphql',
   graphQLHttp({
     schema: buildSchema(`
+      type Replay {
+        _id: ID!
+        title: String!
+        team1: String!
+        team2: String!
+        map: String!
+        category: String
+        tournament: String
+        gameLength: Number
+        version: Number
+        downloads: Number
+        winner: String
+        avgRating: Number
+      }
+
       type RootQuery {
         replays: [String!]!
       }
@@ -27,6 +42,7 @@ app.use(
     `),
     rootValue: {
       replays: () => ['Map', 'Ladder', 'Host'],
+
       createReplay: args => {
         const replayName = args.name;
         return replayName;
