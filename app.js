@@ -1,12 +1,37 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const graphQLHttp = require('express-graphql');
+const { buildSchema } = require('graphql');
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/', (res, req, next) => {
-  res.send('Hello World!');
-});
+app.use(
+  '/graphql',
+  graphQLHttp({
+    schema: buildSchema(`
+      type RootQuery {
+        replays: [String!]!
+      }
+
+      type RootMutation {
+        createReplay(name: String): String
+
+      }
+
+      schema {
+        query: RootQuery
+        mutation: RootMutation
+      }
+    `),
+    rootValue: {
+      replays: () => ['Map', 'Ladder', 'Host']
+    },
+    createReplay: (args) => {
+      
+    }
+  })
+);
 
 app.listen(3000);
