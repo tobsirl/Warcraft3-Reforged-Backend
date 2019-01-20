@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const graphQLHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -84,5 +85,7 @@ app.use(
     graphiql: true
   })
 );
+
+mongoose.connect(`mongodb+srv://Paul:<PASSWORD>@projects-rmvjp.gcp.mongodb.net/test?retryWrites=true`)
 
 app.listen(3000);
