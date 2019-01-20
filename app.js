@@ -86,6 +86,16 @@ app.use(
   })
 );
 
-mongoose.connect(`mongodb+srv://Paul:<PASSWORD>@projects-rmvjp.gcp.mongodb.net/test?retryWrites=true`)
-
-app.listen(3000);
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${
+      process.env.MONGO_PASSWORD
+    }@projects-rmvjp.gcp.mongodb.net/test?retryWrites=true`
+  )
+  .then(() => {
+    app.listen(3000);
+    console.log(`Connected to MongoDB + Server Started`);
+  })
+  .catch(err => {
+    console.log(err);
+  });
