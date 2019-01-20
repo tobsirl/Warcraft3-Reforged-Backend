@@ -21,7 +21,7 @@ app.use(
         title: String!
         team1: String!
         team2: String!
-        realeaseDate: String!
+        releaseDate: String!
         map: String!
         category: String
         tournament: String
@@ -36,7 +36,7 @@ app.use(
         title: String!
         team1: String!
         team2: String!
-        realeaseDate: String!
+        releaseDate: String!
         map: String!
         category: String
         tournament: String
@@ -68,7 +68,7 @@ app.use(
           title: args.replayInput.title,
           team1: args.replayInput.team1,
           team2: args.replayInput.team2,
-          realeaseDate: new Date(args.replayInput.date),
+          releaseDate: new Date(args.replayInput.releaseDate),
           map: args.replayInput.map,
           category: args.replayInput.category,
           tournament: args.replayInput.tournament,
