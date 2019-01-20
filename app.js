@@ -5,6 +5,8 @@ const { buildSchema } = require('graphql');
 
 const app = express();
 
+const replays = [];
+
 app.use(bodyParser.json());
 
 app.use(
@@ -16,22 +18,38 @@ app.use(
         title: String!
         team1: String!
         team2: String!
+        realeaseDate: String!
         map: String!
         category: String
         tournament: String
-        gameLength: Number
-        version: Number
-        downloads: Number
+        gameLength: Float
+        version: String
+        downloads: Float
         winner: String
-        avgRating: Number
+        avgRating: Float
+      }
+
+      input ReplayInput {
+        title: String!
+        team1: String!
+        team2: String!
+        realeaseDate: String!
+        map: String!
+        category: String
+        tournament: String
+        gameLength: Float
+        version: String
+        downloads: Float
+        winner: String
+        avgRating: Float
       }
 
       type RootQuery {
-        replays: [String!]!
+        replays: [Replay!]!
       }
 
       type RootMutation {
-        createReplay(name: String): String
+        createReplay(replayInput: ReplayInput): Replay
 
       }
 
@@ -41,11 +59,26 @@ app.use(
       }
     `),
     rootValue: {
-      replays: () => ['Map', 'Ladder', 'Host'],
+      replays: () => replays,
 
       createReplay: args => {
-        const replayName = args.name;
-        return replayName;
+        const replay = {
+          _id: Math.random().toString(),
+          title: args.replayInput.title,
+          team1: args.replayInput.team1,
+          team2: args.replayInput.team2,
+          realeaseDate: args.replayInput.date,
+          map: args.replayInput.map,
+          category: args.replayInput.category,
+          tournament: args.replayInput.tournament,
+          gameLength: args.replayInput.gameLength,
+          version: args.replayInput.version,
+          downloads: args.replayInput.downloads,
+          winner: args.replayInput.winner,
+          avgRating: args.replayInput.avgRating
+        };
+        replays.push(replay);
+        return replay;
       }
     },
     graphiql: true
