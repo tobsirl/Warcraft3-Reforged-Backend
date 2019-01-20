@@ -8,6 +8,8 @@ const Replay = require('./models/replay');
 
 const app = express();
 
+const replays = [];
+
 app.use(bodyParser.json());
 
 app.use(
@@ -61,23 +63,7 @@ app.use(
     `),
     rootValue: {
       replays: () => replays,
-
       createReplay: args => {
-        // const replay = {
-        //   _id: Math.random().toString(),
-        //   title: args.replayInput.title,
-        //   team1: args.replayInput.team1,
-        //   team2: args.replayInput.team2,
-        //   realeaseDate: args.replayInput.date,
-        //   map: args.replayInput.map,
-        //   category: args.replayInput.category,
-        //   tournament: args.replayInput.tournament,
-        //   gameLength: args.replayInput.gameLength,
-        //   version: args.replayInput.version,
-        //   downloads: args.replayInput.downloads,
-        //   winner: args.replayInput.winner,
-        //   avgRating: args.replayInput.avgRating
-        // };
         const replay = new Replay({
           title: args.replayInput.title,
           team1: args.replayInput.team1,
@@ -92,7 +78,7 @@ app.use(
           winner: args.replayInput.winner,
           avgRating: args.replayInput.avgRating
         });
-        replay
+        return replay
           .save()
           .then(result => {
             console.log(result);
