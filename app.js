@@ -4,9 +4,9 @@ const graphQLHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 
-const app = express();
+const Replay = require('./models/replay');
 
-const replays = [];
+const app = express();
 
 app.use(bodyParser.json());
 
@@ -63,12 +63,26 @@ app.use(
       replays: () => replays,
 
       createReplay: args => {
-        const replay = {
-          _id: Math.random().toString(),
+        // const replay = {
+        //   _id: Math.random().toString(),
+        //   title: args.replayInput.title,
+        //   team1: args.replayInput.team1,
+        //   team2: args.replayInput.team2,
+        //   realeaseDate: args.replayInput.date,
+        //   map: args.replayInput.map,
+        //   category: args.replayInput.category,
+        //   tournament: args.replayInput.tournament,
+        //   gameLength: args.replayInput.gameLength,
+        //   version: args.replayInput.version,
+        //   downloads: args.replayInput.downloads,
+        //   winner: args.replayInput.winner,
+        //   avgRating: args.replayInput.avgRating
+        // };
+        const replay = new Replay({
           title: args.replayInput.title,
           team1: args.replayInput.team1,
           team2: args.replayInput.team2,
-          realeaseDate: args.replayInput.date,
+          realeaseDate: new Date(args.replayInput.date),
           map: args.replayInput.map,
           category: args.replayInput.category,
           tournament: args.replayInput.tournament,
@@ -77,9 +91,17 @@ app.use(
           downloads: args.replayInput.downloads,
           winner: args.replayInput.winner,
           avgRating: args.replayInput.avgRating
-        };
-        replays.push(replay);
-        return replay;
+        });
+        replay
+          .save()
+          .then(result => {
+            console.log(result);
+            return { ...result._doc };
+          })
+          .catch(err => {
+            console.log(err);
+            throw err;
+          });
       }
     },
     graphiql: true
@@ -90,7 +112,7 @@ mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${
       process.env.MONGO_PASSWORD
-    }@projects-rmvjp.gcp.mongodb.net/test?retryWrites=true`
+    }@projects-rmvjp.gcp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`
   )
   .then(() => {
     app.listen(3000);
