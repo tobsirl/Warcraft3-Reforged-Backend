@@ -8,8 +8,6 @@ const Replay = require('./models/replay');
 
 const app = express();
 
-// const replays = [];
-
 app.use(bodyParser.json());
 
 app.use(
