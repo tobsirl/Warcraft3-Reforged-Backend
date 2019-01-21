@@ -115,7 +115,7 @@ app.use(
             });
             return user.save();
           })
-          .then(result => ({ ...result._doc, _id: result.id }))
+          .then(result => ({ ...result._doc, password: null, _id: result.id }))
           .catch(err => {
             throw err;
           })
