@@ -43,6 +43,10 @@ const replaySchema = new Schema({
   },
   avgRating: {
     type: Number
+  },
+  submitter: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
