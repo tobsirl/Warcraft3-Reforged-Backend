@@ -113,7 +113,7 @@ app.use(
               email: args.userInput.email,
               password: hashedPassword
             });
-            user.save();
+            return user.save();
           })
           .then(result => ({ ...result._doc, _id: result.id }))
           .catch(err => {
