@@ -62,7 +62,7 @@ app.use(
 
       type RootMutation {
         createReplay(replayInput: ReplayInput): Replay
-
+        createUser(userInput: UserInput): User
       }
 
       schema {
