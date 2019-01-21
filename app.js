@@ -5,6 +5,7 @@ const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 
 const Replay = require('./models/replay');
+const User = require('./models/user');
 
 const app = express();
 
@@ -71,15 +72,14 @@ app.use(
       }
     `),
     rootValue: {
-      replays: () => {
-        return Replay.find()
-          .then(replays => replays.map(replay => {
-              return { ...replay._doc };
-            }))
+      replays: () =>
+        Replay.find()
+          .then(replays =>
+            replays.map(replay => ({ ...replay._doc }))
+          )
           .catch(err => {
             throw err;
-          });
-      },
+          }),
       createReplay: args => {
         const replay = new Replay({
           title: args.replayInput.title,
@@ -105,6 +105,12 @@ app.use(
             console.log(err);
             throw err;
           });
+      },
+      createUser: args => {
+        const user = new User({
+          email: args.userInput.email,
+          password: args.userInput.password
+        });
       }
     },
     graphiql: true
