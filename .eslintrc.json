@@ -6,6 +6,7 @@
   "rules": {
     "no-unused-vars": 1,
     "no-underscore-dangle": 1,
-    "prefer-destructuring": 1
+    "prefer-destructuring": 1,
+    "arrow-body-style": 1
   }
 }

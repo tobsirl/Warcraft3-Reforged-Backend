@@ -8,7 +8,7 @@ const Replay = require('./models/replay');
 
 const app = express();
 
-const replays = [];
+// const replays = [];
 
 app.use(bodyParser.json());
 
@@ -62,7 +62,15 @@ app.use(
       }
     `),
     rootValue: {
-      replays: () => replays,
+      replays: () => {
+        return Replay.find()
+          .then(replays => replays.map(replay => {
+              return { ...replay._doc };
+            }))
+          .catch(err => {
+            throw err;
+          });
+      },
       createReplay: args => {
         const replay = new Replay({
           title: args.replayInput.title,
