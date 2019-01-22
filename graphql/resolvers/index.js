@@ -3,30 +3,32 @@ const bcrypt = require('bcryptjs');
 const Replay = require('../../models/replay');
 const User = require('../../models/user');
 
-const replays = replayIds =>
-  Replay.find({ _id: { $in: replayIds } })
-    .then(replays =>
-      replays.map(replay => ({
+const replays = async replayIds => {
+  try {
+    const replays = await Replay.find({ _id: { $in: replayIds } });
+    replays.map(replay => ({
         ...replay._doc,
         _id: replay.id,
         releaseDate: new Date(replay._doc.releaseDate).toISOString(),
         submitter: user.bind(this, replay.submitter)
-      }))
-    )
-    .catch(err => {
-      throw err;
-    });
+      }));
+  } catch (err) {
+    throw err;
+  }
+};
 
-const user = userId =>
-  User.findById(userId)
-    .then(user => ({
+const user = async userId => {
+  try {
+    const user = await User.findById(userId);
+    return {
       ...user._doc,
       id: user.id,
       submittedReplay: replays.bind(this, user._doc.submittedReplay)
-    }))
-    .catch(err => {
-      throw err;
-    });
+    };
+  } catch (err) {
+    throw err;
+  }
+};
 
 module.exports = {
   replays: () =>
