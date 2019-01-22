@@ -12,9 +12,26 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const replays = replayIds =>
+  Replay.find({ _id: { $in: replayIds } })
+    .then(replays =>
+      replays.map(replay => ({
+          ...replay._doc,
+          _id: replay.id,
+          submitter: user.bind(this, replay.submitter)
+        }))
+    )
+    .catch(err => {
+      throw err;
+    });
+
 const user = userId =>
   User.findById(userId)
-    .then(user => ({ ...user._doc, id: user.id }))
+    .then(user => ({
+      ...user._doc,
+      id: user.id,
+      submittedReplay: replays.bind(this, user._doc.submittedReplay)
+    }))
     .catch(err => {
       throw err;
     });

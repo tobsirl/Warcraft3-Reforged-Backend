@@ -12,3 +12,19 @@ mutation {
     password
   }
 }
+
+{
+  replays {
+    submitter {
+      email
+      submittedReplay {
+        title
+        team1
+        team2
+        submitter {
+          email
+        }
+      }
+    }
+  }
+}
