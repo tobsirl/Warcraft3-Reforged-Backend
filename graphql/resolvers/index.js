@@ -9,6 +9,7 @@ const replays = replayIds =>
       replays.map(replay => ({
         ...replay._doc,
         _id: replay.id,
+        releaseDate: new Date(replay._doc.releaseDate).toISOString(),
         submitter: user.bind(this, replay.submitter)
       }))
     )
@@ -33,6 +34,7 @@ module.exports = {
       .then(replays =>
         replays.map(replay => ({
           ...replay._doc,
+          releaseDate: new Date(replay._doc.releaseDate).toISOString(),
           submitter: user.bind(this, replay._doc.submitter)
         }))
       )
@@ -62,6 +64,7 @@ module.exports = {
         createdReplay = {
           ...result._doc,
           _id: result._doc._id.toString(),
+          releaseDate: new Date(replay._doc.releaseDate).toISOString(),
           submitter: user.bind(this, result._doc.submitter)
         };
         return User.findById('5c45be68faa221039006adc2');
