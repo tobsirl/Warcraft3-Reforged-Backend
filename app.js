@@ -16,10 +16,10 @@ const replays = replayIds =>
   Replay.find({ _id: { $in: replayIds } })
     .then(replays =>
       replays.map(replay => ({
-          ...replay._doc,
-          _id: replay.id,
-          submitter: user.bind(this, replay.submitter)
-        }))
+        ...replay._doc,
+        _id: replay.id,
+        submitter: user.bind(this, replay.submitter)
+      }))
     )
     .catch(err => {
       throw err;
@@ -130,7 +130,11 @@ app.use(
         return replay
           .save()
           .then(result => {
-            createdReplay = { ...result._doc, _id: result._doc._id.toString() };
+            createdReplay = {
+              ...result._doc,
+              _id: result._doc._id.toString(),
+              submitter: user.bind(this, result._doc.submitter)
+            };
             return User.findById('5c45be68faa221039006adc2');
           })
           .then(user => {
