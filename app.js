@@ -12,6 +12,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const user = userId =>
+  User.findById(userId)
+    .then(user => ({ ...user._doc, id: user.id }))
+    .catch(err => {
+      throw err;
+    });
+
 app.use(
   '/graphql',
   graphQLHttp({
@@ -30,12 +37,14 @@ app.use(
         downloads: Float
         winner: String
         avgRating: Float
+        submitter: User!
       }
 
       type User {
         _id: ID!
         email: String!
         password: String
+        submittedReplay: [Replay!]
       }
 
       input ReplayInput {
@@ -75,7 +84,12 @@ app.use(
     rootValue: {
       replays: () =>
         Replay.find()
-          .then(replays => replays.map(replay => ({ ...replay._doc })))
+          .then(replays =>
+            replays.map(replay => ({
+              ...replay._doc,
+              submitter: user.bind(this, replay._doc.submitter)
+            }))
+          )
           .catch(err => {
             throw err;
           }),
