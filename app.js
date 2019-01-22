@@ -92,14 +92,24 @@ app.use(
           version: args.replayInput.version,
           downloads: args.replayInput.downloads,
           winner: args.replayInput.winner,
-          avgRating: args.replayInput.avgRating
+          avgRating: args.replayInput.avgRating,
+          submitter: '5c45be68faa221039006adc2'
         });
+        let createdReplay;
         return replay
           .save()
           .then(result => {
-            console.log(result);
-            return { ...result._doc };
+            createdReplay = { ...result._doc, _id: result._doc._id.toString() };
+            return User.findById('5c45be68faa221039006adc2');
           })
+          .then(user => {
+            if (!user) {
+              throw new Error('User not found.');
+            }
+            user.submittedReplay.push(replay);
+            return user.save();
+          })
+          .then(result => createdReplay)
           .catch(err => {
             console.log(err);
             throw err;
