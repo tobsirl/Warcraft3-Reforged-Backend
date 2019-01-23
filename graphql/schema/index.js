@@ -2,6 +2,7 @@ const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
 type Upload {
+  _id: ID!
   replay: Replay!
   user: User!
   createdAt: String!
@@ -54,11 +55,13 @@ input UserInput {
 
 type RootQuery {
   replays: [Replay!]!
+  uploads: [Upload!]!
 }
 
 type RootMutation {
   createReplay(replayInput: ReplayInput): Replay
   createUser(userInput: UserInput): User
+  uploadReplay(replayId: ID!): Replay!
 }
 
 schema {
