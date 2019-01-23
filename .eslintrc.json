@@ -5,10 +5,10 @@
 
   "rules": {
     "no-unused-vars": 1,
-    "no-underscore-dangle": 1,
+    "no-underscore-dangle": "off",
     "prefer-destructuring": 1,
     "arrow-body-style": 1,
     "no-console": 0,
-    "no-underscore-dangle": "off"
+    "no-use-before-define": "warn"
   }
 }

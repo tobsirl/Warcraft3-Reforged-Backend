@@ -28,3 +28,5 @@ mutation {
     }
   }
 }
+
+rename functions due to linter + added new linting rule
