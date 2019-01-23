@@ -1,6 +1,13 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
+type Upload {
+  replay: Replay!
+  user: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
 type Replay {
   _id: ID!
   title: String!
