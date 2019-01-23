@@ -61,7 +61,7 @@ type RootQuery {
 type RootMutation {
   createReplay(replayInput: ReplayInput): Replay
   createUser(userInput: UserInput): User
-  uploadReplay(replayId: ID!): Replay!
+  uploadReplay(replayId: ID!): Upload!
 }
 
 schema {
