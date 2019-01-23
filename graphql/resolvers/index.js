@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 
 const Replay = require('../../models/replay');
 const User = require('../../models/user');
+const Upload = require('../../models/upload');
 
 const replaysFetch = async replayIds => {
   try {
@@ -40,6 +41,19 @@ module.exports = {
         releaseDate: new Date(replay._doc.releaseDate).toISOString(),
         submitter: userFetch.bind(this, replay._doc.submitter)
       }));
+    } catch (err) {
+      throw err;
+    }
+  },
+  uploads: async () => {
+    try {
+      const uploads = await Upload.find();
+      return uploads.map(upload => ({
+          ...upload._doc,
+          _id: upload.id,
+          createdAt: new Date(upload._doc.createdAt).toISOString(),
+          updatedAt: new Date(upload._doc.createdAt).toISOString()
+        }));
     } catch (err) {
       throw err;
     }
