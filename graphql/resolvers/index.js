@@ -120,10 +120,10 @@ module.exports = {
 
   uploadReplay: async args => {
     try {
-      const fechedReplay = await Replay.findOne({ _id: args.replayId });
+      const fetchedReplay = await Replay.findOne({ _id: args.replayId });
       const upload = new Upload({
-        userId: '5c470d34dd5f5723888e306b',
-        replay: fechedReplay
+        user: '5c470d34dd5f5723888e306b',
+        replay: fetchedReplay
       });
       const result = await upload.save();
       return {
