@@ -49,11 +49,11 @@ module.exports = {
     try {
       const uploads = await Upload.find();
       return uploads.map(upload => ({
-          ...upload._doc,
-          _id: upload.id,
-          createdAt: new Date(upload._doc.createdAt).toISOString(),
-          updatedAt: new Date(upload._doc.createdAt).toISOString()
-        }));
+        ...upload._doc,
+        _id: upload.id,
+        createdAt: new Date(upload._doc.createdAt).toISOString(),
+        updatedAt: new Date(upload._doc.createdAt).toISOString()
+      }));
     } catch (err) {
       throw err;
     }
@@ -113,6 +113,25 @@ module.exports = {
       });
       const result = await userData.save();
       return { ...result._doc, password: null, _id: result.id };
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  uploadReplay: async args => {
+    try {
+      const fechedReplay = await Replay.findOne({ _id: args.replayId });
+      const upload = new Upload({
+        userId: '5c470d34dd5f5723888e306b',
+        replay: fechedReplay
+      });
+      const result = await upload.save();
+      return {
+        ...result._doc,
+        _id: result.id,
+        createdAt: new Date(result._doc.createdAt).toISOString(),
+        updatedAt: new Date(result._doc.createdAt).toISOString()
+      };
     } catch (err) {
       throw err;
     }
