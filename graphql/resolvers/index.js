@@ -19,6 +19,19 @@ const replaysFetch = async replayIds => {
   }
 };
 
+const replayFetch = async replayId => {
+  try {
+    const replay = await Replay.findById(replayId);
+    return {
+      ...replay._doc,
+      _id: replay.id,
+      submitter: userFetch.bind(this, replay.submitter)
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 const userFetch = async userId => {
   try {
     const user = await User.findById(userId);
@@ -45,12 +58,15 @@ module.exports = {
       throw err;
     }
   },
+
   uploads: async () => {
     try {
       const uploads = await Upload.find();
       return uploads.map(upload => ({
         ...upload._doc,
         _id: upload.id,
+        user: userFetch.bind(this, upload._doc.user),
+        replay: replayFetch.bind(this, upload._doc.replay),
         createdAt: new Date(upload._doc.createdAt).toISOString(),
         updatedAt: new Date(upload._doc.createdAt).toISOString()
       }));
@@ -129,6 +145,8 @@ module.exports = {
       return {
         ...result._doc,
         _id: result.id,
+        user: userFetch.bind(this, upload._doc.user),
+        replay: replayFetch.bind(this, upload._doc.replay),
         createdAt: new Date(result._doc.createdAt).toISOString(),
         updatedAt: new Date(result._doc.createdAt).toISOString()
       };
