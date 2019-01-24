@@ -29,4 +29,14 @@ mutation {
   }
 }
 
-rename functions due to linter + added new linting rule
+mutation {
+  createReplay(replayInput: {title: "tata6", team1: "Grubby", team2: "TH100", releaseDate: "2019-01-20T16:40:22.063Z", map: "Gnoll Wood"}) {
+    title
+    team1
+    team2
+    map
+    submitter {
+      email
+    }
+  }
+}
