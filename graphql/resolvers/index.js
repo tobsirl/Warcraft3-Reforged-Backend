@@ -7,13 +7,12 @@ const Upload = require('../../models/upload');
 const replaysFetch = async replayIds => {
   try {
     const replays = await Replay.find({ _id: { $in: replayIds } });
-    replays.map(replay => ({
+    return replays.map(replay => ({
       ...replay._doc,
       _id: replay.id,
       releaseDate: new Date(replay._doc.releaseDate).toISOString(),
       submitter: userFetch.bind(this, replay.submitter)
     }));
-    return replays;
   } catch (err) {
     throw err;
   }
