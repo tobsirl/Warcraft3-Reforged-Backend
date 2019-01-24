@@ -9,9 +9,11 @@ const { dateToString } = require('../../helpers/date');
 const transformReplay = replay => ({
   ...replay._doc,
   _id: replay.id,
-  releaseDate: new Date(replay._doc.releaseDate).toISOString(),
+  releaseDate: dateToString(replay._doc.releaseDate),
   submitter: userFetch.bind(this, replay.submitter)
 });
+
+
 
 const replaysFetch = async replayIds => {
   try {
@@ -62,8 +64,8 @@ module.exports = {
         _id: upload.id,
         user: userFetch.bind(this, upload._doc.user),
         replay: replayFetch.bind(this, upload._doc.replay),
-        createdAt: new Date(upload._doc.createdAt).toISOString(),
-        updatedAt: new Date(upload._doc.createdAt).toISOString()
+        createdAt: dateToString(upload._doc.createdAt),
+        updatedAt: dateToString(upload._doc.createdAt)
       }));
     } catch (err) {
       throw err;
@@ -137,9 +139,20 @@ module.exports = {
         _id: result.id,
         user: userFetch.bind(this, upload._doc.user),
         replay: replayFetch.bind(this, upload._doc.replay),
-        createdAt: new Date(result._doc.createdAt).toISOString(),
-        updatedAt: new Date(result._doc.createdAt).toISOString()
+        createdAt: dateToString(result._doc.createdAt),
+        updatedAt: dateToString(result._doc.createdAt)
       };
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  deleteReplay: async args => {
+    try {
+      const upload = await Upload.findById(args.uploadId).populate('replay');
+      const replay = transformReplay(replay.event);
+      await Upload.deleteOne({ _id: args.uploadId });
+      return upload;
     } catch (err) {
       throw err;
     }
