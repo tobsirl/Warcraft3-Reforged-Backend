@@ -4,15 +4,17 @@ const Replay = require('../../models/replay');
 const User = require('../../models/user');
 const Upload = require('../../models/upload');
 
+const transformReplay = replay => ({
+  ...replay._doc,
+  _id: replay.id,
+  releaseDate: new Date(replay._doc.releaseDate).toISOString(),
+  submitter: userFetch.bind(this, replay.submitter)
+});
+
 const replaysFetch = async replayIds => {
   try {
     const replays = await Replay.find({ _id: { $in: replayIds } });
-    return replays.map(replay => ({
-      ...replay._doc,
-      _id: replay.id,
-      releaseDate: new Date(replay._doc.releaseDate).toISOString(),
-      submitter: userFetch.bind(this, replay.submitter)
-    }));
+    return replays.map(replay => transformReplay(replay));
   } catch (err) {
     throw err;
   }
@@ -21,11 +23,7 @@ const replaysFetch = async replayIds => {
 const replayFetch = async replayId => {
   try {
     const replay = await Replay.findById(replayId);
-    return {
-      ...replay._doc,
-      _id: replay.id,
-      submitter: userFetch.bind(this, replay.submitter)
-    };
+    return transformReplay(replay);
   } catch (err) {
     throw err;
   }
@@ -48,11 +46,7 @@ module.exports = {
   replays: async () => {
     try {
       const replays = await Replay.find();
-      return replays.map(replay => ({
-        ...replay._doc,
-        releaseDate: new Date(replay._doc.releaseDate).toISOString(),
-        submitter: userFetch.bind(this, replay._doc.submitter)
-      }));
+      return replays.map(replay => transformReplay(replay));
     } catch (err) {
       throw err;
     }
@@ -94,12 +88,7 @@ module.exports = {
 
     try {
       const result = await replay.save();
-      createdReplay = {
-        ...result._doc,
-        _id: result._doc._id.toString(),
-        releaseDate: new Date(replay._doc.releaseDate).toISOString(),
-        submitter: userFetch.bind(this, result._doc.submitter)
-      };
+      createdReplay = transformReplay(result);
       const userdata = await User.findById('5c470d34dd5f5723888e306b');
 
       if (!userdata) {
