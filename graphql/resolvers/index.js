@@ -13,7 +13,14 @@ const transformReplay = replay => ({
   submitter: userFetch.bind(this, replay.submitter)
 });
 
-
+const transformUpload = upload => ({
+  ...upload._doc,
+  _id: upload.id,
+  user: userFetch.bind(this, upload._doc.user),
+  replay: replayFetch.bind(this, upload._doc.replay),
+  createdAt: dateToString(upload._doc.createdAt),
+  updatedAt: dateToString(upload._doc.createdAt)
+});
 
 const replaysFetch = async replayIds => {
   try {
@@ -59,14 +66,7 @@ module.exports = {
   uploads: async () => {
     try {
       const uploads = await Upload.find();
-      return uploads.map(upload => ({
-        ...upload._doc,
-        _id: upload.id,
-        user: userFetch.bind(this, upload._doc.user),
-        replay: replayFetch.bind(this, upload._doc.replay),
-        createdAt: dateToString(upload._doc.createdAt),
-        updatedAt: dateToString(upload._doc.createdAt)
-      }));
+      return uploads.map(upload => transformUpload(upload));
     } catch (err) {
       throw err;
     }
@@ -134,20 +134,13 @@ module.exports = {
         replay: fetchedReplay
       });
       const result = await upload.save();
-      return {
-        ...result._doc,
-        _id: result.id,
-        user: userFetch.bind(this, upload._doc.user),
-        replay: replayFetch.bind(this, upload._doc.replay),
-        createdAt: dateToString(result._doc.createdAt),
-        updatedAt: dateToString(result._doc.createdAt)
-      };
+      return transformUpload(result);
     } catch (err) {
       throw err;
     }
   },
 
-  deleteReplay: async args => {
+  deleteUpload: async args => {
     try {
       const upload = await Upload.findById(args.uploadId).populate('replay');
       const replay = transformReplay(replay.event);
