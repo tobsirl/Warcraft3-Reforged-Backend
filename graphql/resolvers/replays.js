@@ -30,14 +30,14 @@ module.exports = {
       downloads: args.replayInput.downloads,
       winner: args.replayInput.winner,
       avgRating: args.replayInput.avgRating,
-      submitter: '5c470d34dd5f5723888e306b'
+      submitter: req.userId
     });
     let createdReplay;
 
     try {
       const result = await replay.save();
       createdReplay = transformReplay(result);
-      const userdata = await User.findById('5c470d34dd5f5723888e306b');
+      const userdata = await User.findById(req.userId);
 
       if (!userdata) {
         throw new Error('User not found.');

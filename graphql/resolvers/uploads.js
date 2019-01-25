@@ -23,7 +23,7 @@ module.exports = {
     try {
       const fetchedReplay = await Replay.findOne({ _id: args.replayId });
       const upload = new Upload({
-        user: '5c470d34dd5f5723888e306b',
+        user: req.userId,
         replay: fetchedReplay
       });
       const result = await upload.save();

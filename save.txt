@@ -40,3 +40,5 @@ mutation {
     }
   }
 }
+
+"query": "query {login(email:\"test@test.com\", password: \"test1234\") { token }}"
