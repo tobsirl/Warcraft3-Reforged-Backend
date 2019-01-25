@@ -33,6 +33,12 @@ type User {
   submittedReplay: [Replay!]
 }
 
+type AuthData {
+  userId: ID!
+  token: String!
+  tokenExpiration: Int!
+}
+
 input ReplayInput {
   title: String!
   team1: String!
@@ -56,12 +62,14 @@ input UserInput {
 type RootQuery {
   replays: [Replay!]!
   uploads: [Upload!]!
+  login(email: String!, password: String!): AuthData!
 }
 
 type RootMutation {
   createReplay(replayInput: ReplayInput): Replay
   createUser(userInput: UserInput): User
   uploadReplay(replayId: ID!): Upload!
+  deleteUpload(uploadId: ID!): replay!
 }
 
 schema {
