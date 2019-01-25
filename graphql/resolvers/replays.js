@@ -15,7 +15,6 @@ module.exports = {
     }
   },
 
-
   createReplay: async args => {
     const replay = new Replay({
       title: args.replayInput.title,
