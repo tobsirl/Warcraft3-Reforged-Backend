@@ -69,7 +69,7 @@ type RootMutation {
   createReplay(replayInput: ReplayInput): Replay
   createUser(userInput: UserInput): User
   uploadReplay(replayId: ID!): Upload!
-  deleteUpload(uploadId: ID!): replay!
+  deleteUpload(uploadId: ID!): Replay!
 }
 
 schema {
