@@ -4,7 +4,10 @@ const Replay = require('../../models/replay');
 const { transformUpload, transformReplay } = require('./merge');
 
 module.exports = {
-  uploads: async () => {
+  uploads: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const uploads = await Upload.find();
       return uploads.map(upload => transformUpload(upload));
@@ -13,7 +16,10 @@ module.exports = {
     }
   },
 
-  uploadReplay: async args => {
+  uploadReplay: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const fetchedReplay = await Replay.findOne({ _id: args.replayId });
       const upload = new Upload({
@@ -27,7 +33,10 @@ module.exports = {
     }
   },
 
-  deleteUpload: async args => {
+  deleteUpload: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const upload = await Upload.findById(args.uploadId).populate('replay');
       const replay = transformReplay(replay.event);

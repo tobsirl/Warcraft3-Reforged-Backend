@@ -3,8 +3,6 @@ const Replay = require('../../models/replay');
 const User = require('../../models/user');
 const { transformReplay } = require('./merge');
 
-
-
 module.exports = {
   replays: async () => {
     try {
@@ -15,7 +13,10 @@ module.exports = {
     }
   },
 
-  createReplay: async args => {
+  createReplay: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     const replay = new Replay({
       title: args.replayInput.title,
       team1: args.replayInput.team1,
@@ -47,6 +48,5 @@ module.exports = {
     } catch (err) {
       throw err;
     }
-  },
-  
+  }
 };
