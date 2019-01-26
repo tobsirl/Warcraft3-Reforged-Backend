@@ -9,6 +9,8 @@
       "prefer-destructuring": 1,
       "arrow-body-style": 1,
       "no-console": 0,
-      "no-use-before-define": "warn"
+      "no-use-before-define": "warn",
+      "react/prefer-stateless-function": 0,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
 }
