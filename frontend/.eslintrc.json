@@ -1,16 +1,25 @@
 {
-    "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "plugin:jsx-a11y/recommended", "prettier"],
 
-    "plugins": ["prettier"],
-  
-    "rules": {
-      "no-unused-vars": 1,
-      "no-underscore-dangle": "off",
-      "prefer-destructuring": 1,
-      "arrow-body-style": 1,
-      "no-console": 0,
-      "no-use-before-define": "warn",
-      "react/prefer-stateless-function": 0,
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-    }
+  "plugins": ["prettier", "jsx-a11y"],
+
+  "rules": {
+    "no-unused-vars": 1,
+    "no-underscore-dangle": "off",
+    "prefer-destructuring": 1,
+    "arrow-body-style": 1,
+    "no-console": 0,
+    "no-use-before-define": "warn",
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "jsx-a11y/label-has-associated-control": [
+      0,
+      {
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
+        "depth": 3
+      }
+    ]
+  }
 }

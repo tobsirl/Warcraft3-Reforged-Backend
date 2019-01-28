@@ -4,7 +4,16 @@ class Auth extends Component {
   render() {
     return (
       <div>
-        <h1>Auth Page</h1>
+        <form>
+          <div className="form-control">
+            <label htmlFor="email">E-mail</label>
+            <input type="email" id="email" />
+          </div>
+          <div className="form-control">
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
+          </div>
+        </form>
       </div>
     );
   }
