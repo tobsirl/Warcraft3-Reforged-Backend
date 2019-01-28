@@ -1,40 +1,53 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 
-const Form = styled.div`
+const AuthForm = styled.div`
   width: 25rem;
   max-width: 80%;
   margin: 5rem auto;
-`;
 
-const Label = styled.label`
-  width: 100%;
-  display: block;
-`;
+  label {
+    width: 100%;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 
-const Input = styled.input`
-  width: 100%;
-  display: block;
+  input {
+    width: 100%;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    background-color: #3e66be;
+    font: inherit;
+    border: 3px solid #ffe600;
+    border-radius: 3px;
+    padding: 0.25rem 1rem;
+    margin-right: 1rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+    color: #fff;
+  }
 `;
 
 class Auth extends Component {
   render() {
     return (
       <div>
-        <Form className="auth-form">
+        <AuthForm className="auth-form">
           <div className="form-control">
-            <Label htmlFor="email">E-mail</Label>
-            <Input type="email" id="email" />
+            <label htmlFor="email">E-mail</label>
+            <input type="email" id="email" />
           </div>
           <div className="form-control">
-            <Label htmlFor="password">Password</Label>
-            <Input type="password" id="password" />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
           </div>
-        </Form>
-        <div className="form-actions">
-          <button type="button">Switch to Sign Up</button>
-          <button type="submit">Submit</button>
-        </div>
+          <div>
+            <button type="button">Switch to Sign Up</button>
+            <button type="submit">Submit</button>
+          </div>
+        </AuthForm>
       </div>
     );
   }
