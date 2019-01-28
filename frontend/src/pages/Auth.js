@@ -55,20 +55,31 @@ class Auth extends Component {
       return;
     }
 
+    const requestBody = {
+      query: `
+        mutation {
+          createUser(userInput: {email: "${email}", password: "${password}"}) {
+            _id
+            email
+          }
+        }
+      `
+    };
+
     console.log(email, password);
     fetch('http://localhost:8000/graphql', {
       method: 'POST',
-      body: null,
+      body: JSON.stringify(requestBody),
       headers: {
-        
+        'Content-Type': 'application/json'
       }
-    })
+    });
   };
 
   render() {
     return (
       <div>
-        <AuthForm className="auth-form" >
+        <AuthForm className="auth-form">
           <form onSubmit={this.submitHandler}>
             <div className="form-control">
               <label htmlFor="email">E-Mail</label>
