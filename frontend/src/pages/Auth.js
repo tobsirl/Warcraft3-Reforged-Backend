@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import styled, { css } from 'styled-components';
+
+const Form = styled.form `
+  width: 40rem;
+  max-width: 80%;
+  margin: 5rem auto;
+
+`
 
 class Auth extends Component {
   render() {
     return (
       <div>
-        <form>
+        <Form className="auth-form">
           <div className="form-control">
             <label htmlFor="email">E-mail</label>
             <input type="email" id="email" />
@@ -13,7 +21,11 @@ class Auth extends Component {
             <label htmlFor="password">Password</label>
             <input type="password" id="password" />
           </div>
-        </form>
+        </Form>
+        <div className="form-actions">
+          <button type="button">Switch to Sign Up</button>
+          <button type="submit">Submit</button>
+        </div>
       </div>
     );
   }
