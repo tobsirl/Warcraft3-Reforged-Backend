@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const AuthForm = styled.div`
   width: 25rem;
@@ -25,8 +25,17 @@ const AuthForm = styled.div`
     border-radius: 3px;
     padding: 0.25rem 1rem;
     margin-right: 1rem;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
     color: #fff;
+    cursor: pointer;
+    transition: 0.5 ease;
+  }
+
+  button:hover,
+  button:active {
+    background: #ffe600;
+    border-color: #3e66be;
+    color: black;
   }
 `;
 
