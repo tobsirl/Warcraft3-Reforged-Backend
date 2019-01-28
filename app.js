@@ -30,7 +30,7 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => {
-    app.listen(3000);
+    app.listen(8000);
     console.log(`Connected to MongoDB + Server Started`);
   })
   .catch(err => {
