@@ -14,11 +14,15 @@ class App extends Component {
   state = {
     token: null,
     userId: null
-  }
+  };
 
-  login = (token, userId, tokenExpiration) => {};
+  login = (token, userId, tokenExpiration) => {
+    this.setState({ token: token, userId: userId });
+  };
 
-  logout = () => {};
+  logout = () => {
+    this.setState({ token: null, userId: null });
+  };
 
   render() {
     return (
@@ -26,8 +30,8 @@ class App extends Component {
         <React.Fragment>
           <AuthContext.Provider
             value={{
-              token: null,
-              userId: null,
+              token: this.state.token,
+              userId: this.state.userId,
               login: this.login,
               logout: this.logout
             }}
