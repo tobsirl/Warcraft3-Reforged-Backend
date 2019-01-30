@@ -4,7 +4,9 @@ class Replays extends Component {
   render() {
     return (
       <div>
-        <h1>Replays page</h1>
+        <button type="button" className="btn">
+          Create Event
+        </button>
       </div>
     );
   }
