@@ -39,8 +39,7 @@ class App extends Component {
             <MainNavigation />
             <main className="main-content">
               <Switch>
-                {!this.state.token && <Redirect path="/" to="/auth" exact />}
-                {this.state.token && <Redirect path="/" to="/replays" exact />}
+                {this.state.token && <Redirect from="/" to="/replays" exact />}
                 {this.state.token && (
                   <Redirect path="/auth" to="/replays" exact />
                 )}
@@ -51,6 +50,7 @@ class App extends Component {
                 {this.state.token && (
                   <Route path="/uploads" component={UploadsPage} />
                 )}
+                {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>
             </main>
           </AuthContext.Provider>
