@@ -7,22 +7,42 @@ import './Replays.css';
 class Replays extends Component {
   state = {
     creating: false
-  }
+  };
 
   startCreateReplayHandler = () => {
-    this.setState({creating: true})
-  }
+    this.setState({ creating: true });
+  };
+
+  modalCancelHandler = () => {
+    this.setState({ creating: false });
+  };
+
+  modalConfirmHandler = () => {
+    this.setState({ creating: false });
+  };
 
   render() {
     return (
       <React.Fragment>
         {this.state.creating && <Backdrop />}
-        {this.state.creating && <Modal title="Add Replay" canCancel canConfirm>
-          <p>Modal Content</p>
-        </Modal>}
+        {this.state.creating && (
+          <Modal
+            title="Add Replay"
+            canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmHandler}
+          >
+            <p>Modal Content</p>
+          </Modal>
+        )}
         <div className="replays-control">
           <p>Share your own replays!</p>
-          <button type="button" className="btn" onClick={this.startCreateReplayHandler}>
+          <button
+            type="button"
+            className="btn"
+            onClick={this.startCreateReplayHandler}
+          >
             Create Event
           </button>
         </div>
