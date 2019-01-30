@@ -5,16 +5,24 @@ import Backdrop from '../components/Backdrop/Backdrop';
 import './Replays.css';
 
 class Replays extends Component {
+  state = {
+    creating: false
+  }
+
+  startCreateReplayHandler = () => {
+    this.setState({creating: true})
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Backdrop />
-        <Modal title="Add Replay" canCancel canConfirm>
+        {this.state.creating && <Backdrop />}
+        {this.state.creating && <Modal title="Add Replay" canCancel canConfirm>
           <p>Modal Content</p>
-        </Modal>
+        </Modal>}
         <div className="replays-control">
           <p>Share your own replays!</p>
-          <button type="button" className="btn">
+          <button type="button" className="btn" onClick={this.startCreateReplayHandler}>
             Create Event
           </button>
         </div>
