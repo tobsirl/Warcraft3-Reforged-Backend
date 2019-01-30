@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import Modal from '../components/Modal/Modal';
+import Backdrop from '../components/Backdrop/Backdrop';
 import './Replays.css';
 
 class Replays extends Component {
   render() {
     return (
       <React.Fragment>
+        <Backdrop />
         <Modal title="Add Replay" canCancel canConfirm>
           <p>Modal Content</p>
         </Modal>
