@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
+import AuthContext from '../context/auth-context';
 import './Replays.css';
 
 class Replays extends Component {
   state = {
     creating: false
   };
+
+  static contextType = AuthContext;
 
   constructor(props) {
     super(props);
@@ -36,6 +39,50 @@ class Replays extends Component {
 
     const event = { title, team1, team2, releaseDate, map };
     console.log(event);
+
+    const requestBody = {
+      query: `
+          mutation {
+            createReplay(replayInput: {title: "${title}", team1: "${team1}", team2: "${team2}", releaseDate: "${releaseDate}", map: "${map}" }) {
+              _id
+              title
+              team1
+              team2
+              releaseData
+              map
+              submitter {
+                email
+              }
+            }
+          }
+        `
+    };
+
+    fetch('http://localhost:8000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        if (resData.data.login.token) {
+          this.context.login(
+            resData.data.login.token,
+            resData.data.login.userId,
+            resData.data.login.tokenExpiration
+          );
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -66,7 +113,7 @@ class Replays extends Component {
               <div className="form-control">
                 <label htmlFor="releaseDate">Release Date</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   id="releaseDate"
                   ref={this.releaseDateElRef}
                 />
