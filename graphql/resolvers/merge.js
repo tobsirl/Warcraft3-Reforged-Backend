@@ -37,7 +37,7 @@ const userFetch = async userId => {
 const transformReplay = replay => ({
   ...replay._doc,
   _id: replay.id,
-  releaseDate: dateToString(replay._doc.releaseDate),
+  date: dateToString(replay._doc.date),
   submitter: userFetch.bind(this, replay.submitter)
 });
 

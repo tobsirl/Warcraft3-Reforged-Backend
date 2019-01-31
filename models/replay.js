@@ -15,7 +15,7 @@ const replaySchema = new Schema({
     type: String,
     required: true
   },
-  releaseDate: {
+  date: {
     type: Date,
     required: true
   },

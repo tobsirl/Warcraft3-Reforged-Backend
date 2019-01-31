@@ -21,7 +21,7 @@ module.exports = {
       title: args.replayInput.title,
       team1: args.replayInput.team1,
       team2: args.replayInput.team2,
-      releaseDate: new Date(args.replayInput.releaseDate),
+      date: new Date(args.replayInput.date),
       map: args.replayInput.map,
       category: args.replayInput.category,
       tournament: args.replayInput.tournament,

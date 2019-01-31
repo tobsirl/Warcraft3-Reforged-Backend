@@ -17,7 +17,7 @@ class Replays extends Component {
     this.titleElRef = React.createRef();
     this.team1ElRef = React.createRef();
     this.team2ElRef = React.createRef();
-    this.releaseDateElRef = React.createRef();
+    this.dateElRef = React.createRef();
     this.mapElRef = React.createRef();
   }
 
@@ -34,21 +34,31 @@ class Replays extends Component {
     const title = this.titleElRef.current.value;
     const team1 = this.team1ElRef.current.value;
     const team2 = this.team2ElRef.current.value;
-    const releaseDate = this.releaseDateElRef.current.value;
+    const date = this.dateElRef.current.value;
     const map = this.mapElRef.current.value;
 
-    const event = { title, team1, team2, releaseDate, map };
-    console.log(event);
+    if (
+      title.trim().length === 0 ||
+      team1.trim().length === 0 ||
+      team2.trim().length === 0 ||
+      date.trim().length === 0 ||
+      map.trim().length === 0
+    ) {
+      return;
+    }
+
+    const replay = { title, team1, team2, date, map };
+    console.log(replay);
 
     const requestBody = {
       query: `
           mutation {
-            createReplay(replayInput: {title: "${title}", team1: "${team1}", team2: "${team2}", releaseDate: "${releaseDate}", map: "${map}" }) {
+            createReplay(replayInput: {title: "${title}", team1: "${team1}", team2: "${team2}", date: "${date}", map: "${map}" }) {
               _id
               title
               team1
               team2
-              releaseData
+              date
               map
               submitter {
                 email
@@ -58,11 +68,14 @@ class Replays extends Component {
         `
     };
 
+    const token = this.context.token;
+
     fetch('http://localhost:8000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       }
     })
       .then(res => {
@@ -72,13 +85,7 @@ class Replays extends Component {
         return res.json();
       })
       .then(resData => {
-        if (resData.data.login.token) {
-          this.context.login(
-            resData.data.login.token,
-            resData.data.login.userId,
-            resData.data.login.tokenExpiration
-          );
-        }
+        console.log(resData);
       })
       .catch(err => {
         console.log(err);
@@ -111,12 +118,8 @@ class Replays extends Component {
                 <input type="text" id="team2" ref={this.team2ElRef} />
               </div>
               <div className="form-control">
-                <label htmlFor="releaseDate">Release Date</label>
-                <input
-                  type="datetime-local"
-                  id="releaseDate"
-                  ref={this.releaseDateElRef}
-                />
+                <label htmlFor="date">Date</label>
+                <input type="date" id="date" ref={this.dateElRef} />
               </div>
               <div className="form-control">
                 <label htmlFor="map">Map</label>
@@ -125,16 +128,18 @@ class Replays extends Component {
             </form>
           </Modal>
         )}
-        <div className="replays-control">
-          <p>Share your own replays!</p>
-          <button
-            type="button"
-            className="btn"
-            onClick={this.startCreateReplayHandler}
-          >
-            Create Event
-          </button>
-        </div>
+        {this.context.token && (
+          <div className="replays-control">
+            <p>Share your own replays!</p>
+            <button
+              type="button"
+              className="btn"
+              onClick={this.startCreateReplayHandler}
+            >
+              Create Event
+            </button>
+          </div>
+        )}
       </React.Fragment>
     );
   }

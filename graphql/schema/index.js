@@ -14,7 +14,7 @@ type Replay {
   title: String!
   team1: String!
   team2: String!
-  releaseDate: String!
+  date: String!
   map: String!
   category: String
   tournament: String
@@ -43,7 +43,7 @@ input ReplayInput {
   title: String!
   team1: String!
   team2: String!
-  releaseDate: String!
+  date: String!
   map: String!
   category: String
   tournament: String
