@@ -9,6 +9,15 @@ class Replays extends Component {
     creating: false
   };
 
+  constructor(props) {
+    super(props);
+    this.titleElRef = React.createElement();
+    this.team1ElRef = React.createElement();
+    this.team2ElRef = React.createElement();
+    this.releaseDateElRef = React.createElement();
+    this.mapElRef = React.createElement();
+  }
+
   startCreateReplayHandler = () => {
     this.setState({ creating: true });
   };
@@ -36,25 +45,28 @@ class Replays extends Component {
             <form action="">
               <div className="form-control">
                 <label htmlFor="title">Title</label>
-                <input type="text" id="title" />
+                <input type="text" id="title" ref={this.titleElRef} />
               </div>
               <div className="form-control">
                 <label htmlFor="team1">team1</label>
-                <input type="text" id="team1" />
+                <input type="text" id="team1" ref={this.team1ElRef} />
               </div>
               <div className="form-control">
                 <label htmlFor="team2">team2</label>
-                <input type="text" id="team2" />
+                <input type="text" id="team2" ref={this.team2ElRef} />
               </div>
               <div className="form-control">
                 <label htmlFor="releaseDate">Release Date</label>
-                <input type="date" id="releaseDate" />
+                <input
+                  type="date"
+                  id="releaseDate"
+                  ref={this.releaseDateElRef}
+                />
               </div>
               <div className="form-control">
                 <label htmlFor="map">Map</label>
-                <input type="text" id="map" />
+                <input type="text" id="map" ref={mapElRef} />
               </div>
-      
             </form>
           </Modal>
         )}
