@@ -33,7 +33,29 @@ class Replays extends Component {
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
           >
-            <p>Modal Content</p>
+            <form action="">
+              <div className="form-control">
+                <label htmlFor="title">Title</label>
+                <input type="text" id="title" />
+              </div>
+              <div className="form-control">
+                <label htmlFor="team1">team1</label>
+                <input type="text" id="team1" />
+              </div>
+              <div className="form-control">
+                <label htmlFor="team2">team2</label>
+                <input type="text" id="team2" />
+              </div>
+              <div className="form-control">
+                <label htmlFor="releaseDate">Release Date</label>
+                <input type="date" id="releaseDate" />
+              </div>
+              <div className="form-control">
+                <label htmlFor="map">Map</label>
+                <input type="text" id="map" />
+              </div>
+      
+            </form>
           </Modal>
         )}
         <div className="replays-control">
