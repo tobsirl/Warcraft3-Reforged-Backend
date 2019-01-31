@@ -28,6 +28,14 @@ class Replays extends Component {
 
   modalConfirmHandler = () => {
     this.setState({ creating: false });
+    const title = this.titleElRef.current.value;
+    const team1 = this.team1ElRef.current.value;
+    const team2 = this.team2ElRef.current.value;
+    const releaseDate = this.releaseDateElRef.current.value;
+    const map = this.mapElRef.current.value;
+
+    const event = { title, team1, team2, releaseDate, map };
+    console.log(event);
   };
 
   render() {
