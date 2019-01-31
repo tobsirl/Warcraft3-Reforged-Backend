@@ -21,6 +21,10 @@ class Replays extends Component {
     this.mapElRef = React.createRef();
   }
 
+  componentDidMount() {
+    this.fetchReplays();
+  }
+
   startCreateReplayHandler = () => {
     this.setState({ creating: true });
   };
@@ -92,6 +96,47 @@ class Replays extends Component {
       });
   };
 
+  fetchReplays = () => {
+    const requestBody = {
+      query: `
+          query {
+            replays {
+              _id
+              title
+              team1
+              team2
+              date
+              map
+              submitter {
+                _id
+                email
+              }
+            }
+          }
+        `
+    };
+
+    fetch('http://localhost:8000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log(resData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -140,6 +185,10 @@ class Replays extends Component {
             </button>
           </div>
         )}
+
+        <ul className="replays__list">
+          <li className="replays__list-item">Test</li>
+        </ul>
       </React.Fragment>
     );
   }
