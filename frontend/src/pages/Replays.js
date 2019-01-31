@@ -7,7 +7,8 @@ import './Replays.css';
 
 class Replays extends Component {
   state = {
-    creating: false
+    creating: false,
+    replays: []
   };
 
   static contextType = AuthContext;
@@ -89,7 +90,7 @@ class Replays extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
+        this.fetchReplays();
       })
       .catch(err => {
         console.log(err);
@@ -130,7 +131,8 @@ class Replays extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
+        const replays = resData.data.replays;
+        this.setState({ replays: replays });
       })
       .catch(err => {
         console.log(err);
@@ -138,6 +140,13 @@ class Replays extends Component {
   };
 
   render() {
+    const replayList = this.state.replays.map(replay => {
+      return (
+        <li key={replay._id} className="replays__list-item">
+          {replay.title}
+        </li>
+      );
+    });
     return (
       <React.Fragment>
         {this.state.creating && <Backdrop />}
@@ -186,9 +195,7 @@ class Replays extends Component {
           </div>
         )}
 
-        <ul className="replays__list">
-          <li className="replays__list-item">Test</li>
-        </ul>
+        <ul className="replays__list">{replayList}</ul>
       </React.Fragment>
     );
   }
