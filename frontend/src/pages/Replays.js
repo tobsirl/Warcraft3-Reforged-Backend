@@ -11,11 +11,11 @@ class Replays extends Component {
 
   constructor(props) {
     super(props);
-    this.titleElRef = React.createElement();
-    this.team1ElRef = React.createElement();
-    this.team2ElRef = React.createElement();
-    this.releaseDateElRef = React.createElement();
-    this.mapElRef = React.createElement();
+    this.titleElRef = React.createRef();
+    this.team1ElRef = React.createRef();
+    this.team2ElRef = React.createRef();
+    this.releaseDateElRef = React.createRef();
+    this.mapElRef = React.createRef();
   }
 
   startCreateReplayHandler = () => {
@@ -73,7 +73,7 @@ class Replays extends Component {
               </div>
               <div className="form-control">
                 <label htmlFor="map">Map</label>
-                <input type="text" id="map" ref={mapElRef} />
+                <input type="text" id="map" ref={this.mapElRef} />
               </div>
             </form>
           </Modal>
