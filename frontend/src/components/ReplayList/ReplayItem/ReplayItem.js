@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './ReplayItem.css';
 
@@ -16,5 +17,10 @@ const ReplayItem = ({ replayId, title }) => (
     </li>
   </div>
 );
+
+ReplayItem.propTypes = {
+  replayId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};
 
 export default ReplayItem;
