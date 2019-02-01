@@ -5,14 +5,16 @@ import './ReplayList.css';
 
 const ReplayList = props => {
   const replays = props.replays.map(replay => (
-    <ReplayItem key={replay._id} replayId={replay._id} title={replay.title} />
+    <ReplayItem
+      key={replay._id}
+      replayId={replay._id}
+      title={replay.title}
+      team1={replay.team1}
+      team2={replay.team2}
+    />
   ));
 
-  return (
-    <ul className="replay__list">
-      {replays}
-    </ul>
-);
+  return <ul className="replay__list">{replays}</ul>;
 };
 
 export default ReplayList;
