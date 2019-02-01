@@ -66,9 +66,6 @@ class Replays extends Component {
               team2
               date
               map
-              submitter {
-                email
-              }
             }
           }
         `
@@ -91,7 +88,21 @@ class Replays extends Component {
         return res.json();
       })
       .then(resData => {
-        this.fetchReplays();
+        this.setState(prevState => {
+          const updatedReplays = [...prevState.replays];
+          updatedReplays.push({
+            _id: resData.data.createReplay._id,
+            title: resData.data.createReplay.title,
+            team1: resData.data.createReplay.team1,
+            team2: resData.data.createReplay.team2,
+            date: resData.data.createReplay.date,
+            map: resData.data.createReplay.map,
+            submitter: {
+              _id: this.context.userId
+            }
+          });
+          return { replays: updatedReplays };
+        });
       })
       .catch(err => {
         console.log(err);
@@ -188,7 +199,10 @@ class Replays extends Component {
             </button>
           </div>
         )}
-        <ReplayList replays={this.state.replays} />
+        <ReplayList
+          replays={this.state.replays}
+          authUserId={this.context.userId}
+        />
       </React.Fragment>
     );
   }
