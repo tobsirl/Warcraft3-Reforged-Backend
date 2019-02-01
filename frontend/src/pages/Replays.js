@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
+import ReplayList from '../components/ReplayList/ReplayList';
 import AuthContext from '../context/auth-context';
 import './Replays.css';
 
@@ -140,13 +141,6 @@ class Replays extends Component {
   };
 
   render() {
-    const replayList = this.state.replays.map(replay => {
-      return (
-        <li key={replay._id} className="replays__list-item">
-          {replay.title}
-        </li>
-      );
-    });
     return (
       <React.Fragment>
         {this.state.creating && <Backdrop />}
@@ -194,8 +188,7 @@ class Replays extends Component {
             </button>
           </div>
         )}
-
-       
+        <ReplayList replays={this.state.replays} />
       </React.Fragment>
     );
   }
