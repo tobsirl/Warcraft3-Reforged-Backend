@@ -195,7 +195,7 @@ class Replays extends Component {
           </div>
         )}
 
-        <ul className="replays__list">{replayList}</ul>
+       
       </React.Fragment>
     );
   }
