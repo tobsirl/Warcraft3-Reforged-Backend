@@ -9,7 +9,8 @@ import './Replays.css';
 class Replays extends Component {
   state = {
     creating: false,
-    replays: []
+    replays: [],
+    isLoading: false
   };
 
   static contextType = AuthContext;
@@ -110,6 +111,7 @@ class Replays extends Component {
   };
 
   fetchReplays = () => {
+    this.setState({ isLoading: true });
     const requestBody = {
       query: `
           query {
@@ -144,10 +146,11 @@ class Replays extends Component {
       })
       .then(resData => {
         const replays = resData.data.replays;
-        this.setState({ replays: replays });
+        this.setState({ replays: replays, isLoading: false });
       })
       .catch(err => {
         console.log(err);
+        this.setState({ isLoading: false });
       });
   };
 
