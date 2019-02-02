@@ -6,6 +6,8 @@ import ReplayList from '../components/ReplayList/ReplayList';
 import AuthContext from '../context/auth-context';
 import './Replays.css';
 
+import Spinner from '../components/Spinner/Spinner';
+
 class Replays extends Component {
   state = {
     creating: false,
@@ -203,7 +205,7 @@ class Replays extends Component {
           </div>
         )}
         {this.state.isLoading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : (
           <ReplayList
             replays={this.state.replays}
