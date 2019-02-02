@@ -202,10 +202,14 @@ class Replays extends Component {
             </button>
           </div>
         )}
-        <ReplayList
-          replays={this.state.replays}
-          authUserId={this.context.userId}
-        />
+        {this.state.isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <ReplayList
+            replays={this.state.replays}
+            authUserId={this.context.userId}
+          />
+        )}
       </React.Fragment>
     );
   }
