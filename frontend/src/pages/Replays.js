@@ -36,7 +36,7 @@ class Replays extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false });
+    this.setState({ creating: false, selectedReplay: null });
   };
 
   modalConfirmHandler = () => {
@@ -201,6 +201,21 @@ class Replays extends Component {
             </form>
           </Modal>
         )}
+        {this.state.selectedReplay && (<Modal
+            title={this.state.selectedReplay.title}
+            canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmHandler}
+          >
+          <h1>{this.state.selectedReplay.title}</h1>
+            <h2>
+              ${this.state.selectedReplay.team1} -{' '}
+              ${this.state.selectedReplay.team2} -{' '}
+              {new Date(this.state.selectedReplay.date).toLocaleDateString()}
+            </h2>
+            <p>{this.state.selectedReplay.map}</p>
+          </Modal>)}
         {this.context.token && (
           <div className="replays-control">
             <p>Share your own replays!</p>
@@ -219,7 +234,7 @@ class Replays extends Component {
           <ReplayList
             replays={this.state.replays}
             authUserId={this.context.userId}
-            onViewDetail={}
+            onViewDetail={this.showDetailHanlder}
           />
         )}
       </React.Fragment>

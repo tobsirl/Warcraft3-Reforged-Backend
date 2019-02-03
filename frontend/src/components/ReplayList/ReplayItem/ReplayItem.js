@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 
 import './ReplayItem.css';
 
-const ReplayItem = ({ replayId, title, team1, team2, userId, submitterId }) => (
+const ReplayItem = (props) => (
   <div>
     <li key={replayId} className="replays__list-item">
       <div>
-        <h1>{title}</h1>
-        <h2>{team1}</h2>
-        <h2>{team2}</h2>
+        <h1>{props.title}</h1>
+        <h2>{props.team1}</h2>
+        <h2>{props.team2}</h2>
       </div>
       <div>
-        {userId === submitterId ? (
+        {props.userId === props.submitterId ? (
           <p>You're the owner of this replay.</p>
         ) : (
           <button
             type="button"
             className="btn"
-            onClick={props.onDetail.bind(props.replayId)}
+            onClick={props.onDetail.bind(this, props.replayId)}
           >
             View Details
           </button>
