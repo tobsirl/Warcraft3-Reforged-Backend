@@ -12,7 +12,8 @@ class Replays extends Component {
   state = {
     creating: false,
     replays: [],
-    isLoading: false
+    isLoading: false,
+    selectedReplay: null
   };
 
   static contextType = AuthContext;
@@ -156,8 +157,12 @@ class Replays extends Component {
       });
   };
 
-  showDetailHanlder = () => {
-    
+  showDetailHanlder = (replayId) => {
+    this.setState(prevState => {
+      const selectedReplay = prevState.replays.find(e => e._id === replayId);
+      return {selectedReplay: selectedReplay}
+    })
+
   }
 
   render() {
