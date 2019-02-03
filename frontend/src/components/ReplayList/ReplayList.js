@@ -13,6 +13,8 @@ const ReplayList = props => {
       team2={replay.team2}
       userId={props.authUserId}
       submitterId={replay.submitter._id}
+      onDetail={props.onViewDetail}
+
     />
   ));
 

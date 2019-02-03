@@ -15,7 +15,11 @@ const ReplayItem = ({ replayId, title, team1, team2, userId, submitterId }) => (
         {userId === submitterId ? (
           <p>You're the owner of this replay.</p>
         ) : (
-          <button type="button" className="btn">
+          <button
+            type="button"
+            className="btn"
+            onClick={props.onDetail.bind(props.replayId)}
+          >
             View Details
           </button>
         )}

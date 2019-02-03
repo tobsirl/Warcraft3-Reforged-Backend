@@ -156,6 +156,10 @@ class Replays extends Component {
       });
   };
 
+  showDetailHanlder = () => {
+    
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -210,6 +214,7 @@ class Replays extends Component {
           <ReplayList
             replays={this.state.replays}
             authUserId={this.context.userId}
+            onViewDetail={}
           />
         )}
       </React.Fragment>
