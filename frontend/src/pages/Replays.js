@@ -47,6 +47,7 @@ class Replays extends Component {
     const team2 = this.team2ElRef.current.value;
     const date = this.dateElRef.current.value;
     const map = this.mapElRef.current.value;
+    const file = this.fileElRef.current.value;
 
     if (
       title.trim().length === 0 ||
@@ -58,7 +59,7 @@ class Replays extends Component {
       return;
     }
 
-    const replay = { title, team1, team2, date, map };
+    const replay = { title, team1, team2, date, map, file };
     console.log(replay);
 
     const requestBody = {
@@ -165,6 +166,13 @@ class Replays extends Component {
     });
   };
 
+  // file upload
+  fileSelectHandler = event => {
+    this.setState({
+      selectedReplay: event.target.files[0]
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -199,7 +207,9 @@ class Replays extends Component {
                 <input type="text" id="map" ref={this.mapElRef} />
               </div>
               <div className="form-control">
-                <label htmlFor="file">Chose file</label>
+                <label htmlFor="file" onChange={this.fileSelectHandler}>
+                  Chose file
+                </label>
                 <input type="file" id="file" ref={this.fileElRef} />
               </div>
             </form>
