@@ -25,6 +25,7 @@ class Replays extends Component {
     this.team2ElRef = React.createRef();
     this.dateElRef = React.createRef();
     this.mapElRef = React.createRef();
+    this.fileElRef = React.createRef();
   }
 
   componentDidMount() {
@@ -157,13 +158,12 @@ class Replays extends Component {
       });
   };
 
-  showDetailHanlder = (replayId) => {
+  showDetailHanlder = replayId => {
     this.setState(prevState => {
       const selectedReplay = prevState.replays.find(e => e._id === replayId);
-      return {selectedReplay: selectedReplay}
-    })
-
-  }
+      return { selectedReplay: selectedReplay };
+    });
+  };
 
   render() {
     return (
@@ -198,24 +198,30 @@ class Replays extends Component {
                 <label htmlFor="map">Map</label>
                 <input type="text" id="map" ref={this.mapElRef} />
               </div>
+              <div className="form-control">
+                <label htmlFor="file">Chose file</label>
+                <input type="file" id="file" ref={this.fileElRef} />
+              </div>
             </form>
           </Modal>
         )}
-        {this.state.selectedReplay && (<Modal
+        {this.state.selectedReplay && (
+          <Modal
             title={this.state.selectedReplay.title}
             canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
           >
-          <h1>{this.state.selectedReplay.title}</h1>
-            <h2>
-              ${this.state.selectedReplay.team1} -{' '}
-              ${this.state.selectedReplay.team2} -{' '}
+            <h1>{this.state.selectedReplay.title}</h1>
+            <h2>{this.state.selectedReplay.team1}</h2>
+            <h2>{this.state.selectedReplay.team2}</h2>
+            <h3>
               {new Date(this.state.selectedReplay.date).toLocaleDateString()}
-            </h2>
+            </h3>
             <p>{this.state.selectedReplay.map}</p>
-          </Modal>)}
+          </Modal>
+        )}
         {this.context.token && (
           <div className="replays-control">
             <p>Share your own replays!</p>
@@ -224,7 +230,7 @@ class Replays extends Component {
               className="btn"
               onClick={this.startCreateReplayHandler}
             >
-              Create Event
+              Create Replay
             </button>
           </div>
         )}

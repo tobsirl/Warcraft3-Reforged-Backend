@@ -5,7 +5,7 @@ import './ReplayItem.css';
 
 const ReplayItem = (props) => (
   <div>
-    <li key={replayId} className="replays__list-item">
+    <li key={props.replayId} className="replays__list-item">
       <div>
         <h1>{props.title}</h1>
         <h2>{props.team1}</h2>
